@@ -1,0 +1,32 @@
+# @package _global_
+
+defaults:
+  # override config either in this file or using experiment config
+  - _self_
+  - experiment: null # experiment configs allow for version control of specific hyperparameters
+
+train: false
+fine_tune: false
+distill: false
+test: false
+score: false
+predict: false
+
+# Setting
+batch_size: 64
+n_beams: 10
+n_gpus: 1
+
+# Data
+data_path: null
+output_sampled_smiles: null
+vocabulary_path: null
+task: forward_prediction # ["forward_prediction", "backward_prediction", "mol_opt"]
+i_chunk: 0
+n_chunks: 1
+
+# Model
+model_path: null
+model_type: bart # ["bart", "unified"]
+dataset_type: synthesis
+dataset_part: full # ["full", "train", "val", "test"]

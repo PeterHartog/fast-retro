@@ -1,0 +1,73 @@
+# @package _global_
+
+defaults:
+  - hydra: default.yaml
+  - plugins: null
+  - trainer: inference.yaml
+
+  # override config either in this file or using experiment config
+  - _self_
+  - experiment: null # experiment configs allow for version control of specific hyperparameters
+
+# Setting
+run_name: ${task} # change if you want a custom run name for the model checkpoint
+
+home: /home/kvvb168/chem_reruns
+output_directory: ${home}/tb_logs
+project_name: fine-tuning-chemformer
+track: false
+track_path: "data/emissions/emissions.csv"
+track_file: ""
+track_project_name: ""
+port: 8006
+
+train: false
+fine_tune: false
+distill: false
+test: false
+score: false
+predict: false
+
+# Trainer
+seed: 1
+batch_size: 128
+n_gpus: 1
+n_chunks: 1
+i_chunk: 0
+
+resume: false
+train_mode: false
+
+# Data
+data_path: null
+dataset_part: test # Which dataset split to run inference on. [full", "train", "val", "test"]
+dataset_type: synthesis
+vocabulary_path: bart_vocab_downstream.json
+task: "forward_prediction" # ["forward_prediction", "backward_prediction"]
+
+# Output files
+output_score_data: null # Path to .csv file to which model score results should be written.
+output_sampled_smiles: null # Path to .json file to which sampled smiles should be written.
+
+# Model args
+model_path: null
+model_type: bart # ["bart", "unified"]
+n_beams: 10
+n_unique_beams: null
+# Optional args
+d_model: null
+n_layers: null
+n_encoder_layers: null
+n_decoder_layers: null
+n_heads: null
+d_feedforward: null
+
+callbacks:
+  - ScoreCallback
+
+scorers:
+  - FractionInvalidScore
+  - FractionUniqueScore
+  - TanimotoSimilarityScore:
+      - statistics: mean
+  - TopKAccuracyScore

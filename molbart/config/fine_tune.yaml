@@ -1,0 +1,84 @@
+# @package _global_
+
+defaults:
+  - plugins: deepspeed.yaml
+  - logger: tensorboard.yaml
+  - hparam_search: null
+  - trainer: default.yaml
+  # override config either in this file or using experiment config
+  - _self_
+  - experiment: null # experiment configs allow for version control of specific hyperparameters
+
+# Setting
+project_name: fine-tuning-chemformer
+track: false
+track_path: "data/emissions/emissions.csv"
+
+output_directory: "tb_logs"
+deepspeed_config_path: "ds_config.json"
+
+task: backward_prediction # ["forward_prediction", "backward_prediction", "mol_opt"]]
+run_name: ${task} # change if you want a custom run name for the model checkpoint
+
+train: false
+fine_tune: false
+distill: false
+test: false
+score: false
+predict: false
+
+# Trainer
+seed: 73
+resume: false
+batch_size: 128
+n_epochs: 50
+limit_val_batches: 1.0
+n_buckets: 24
+n_gpus: 1
+n_nodes: 1
+acc_batches: 8
+accelerator: null
+check_val_every_n_epoch: 1
+
+trainer:
+  limit_test_batches: 1
+
+# Data
+data_path: null
+dataset_type: synthesis
+# "The datamodule to to use, example 'uspto_50'
+# (see molbart.util.build_seq2seq_datamodule")
+vocabulary_path: vocab/bart_vocab_downstream.json
+augmentation_probability: 0.0
+augmentation_strategy: null # Can be set to "all", "reactants", "products" when using synthesis datamodule
+
+# Model
+model_path: null
+model_type: bart # ["bart", "unified"]
+learning_rate: 0.001
+weight_decay: 0.0
+clip_grad: 1.0
+d_model: 512
+n_layers: 6
+n_heads: 8
+d_feedforward: 2048
+train_tokens: null
+max_seq_len: 512
+
+schedule: cycle
+warm_up_steps: 8000
+
+callbacks:
+  - LearningRateMonitor
+  - ModelCheckpoint:
+      - every_n_epochs: 1
+      - monitor: validation_loss
+      - save_last: false
+      - save_top_k: 1
+  - ValidationScoreCallback
+  - StepCheckpoint
+  - OptLRMonitor
+
+scorers:
+  - FractionInvalidScore
+  - TopKAccuracyScore

@@ -1,0 +1,5 @@
+_target_: pytorch_lightning.Trainer
+
+accelerator: auto
+devices: ${n_gpus}
+precision: 16-mixed

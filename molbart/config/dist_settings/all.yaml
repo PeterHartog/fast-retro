@@ -1,0 +1,50 @@
+temperature: 1
+temperature_scheduler: null
+hard_label_weight: 1.0
+hard_loss_type: ce
+hard_label_weight_scheduler: null
+kd_loss_weight: 1.0
+kd_loss_type: ce
+kd_loss_scheduler: null
+probability_shift: False
+distill_type: relation
+intermediate_matches:
+  - {
+      layer_T: "emb",
+      layer_S: "emb",
+      feature: "hidden",
+      loss: "hidden_mse",
+      weight: 1.0,
+      projection:
+        {
+          projection: "linear",
+          dim_in: "${student_d_model}",
+          dim_out: "${d_model}",
+        },
+    }
+  - {
+      layer_T: "encoder",
+      layer_S: "encoder",
+      feature: "hidden",
+      loss: "hidden_mse",
+      weight: 1.0,
+      projection:
+        {
+          projection: "linear",
+          dim_in: "${student_d_model}",
+          dim_out: "${d_model}",
+        },
+    }
+  - {
+      layer_T: "decoder",
+      layer_S: "decoder",
+      feature: "hidden",
+      loss: "hidden_mse",
+      weight: 1.0,
+      projection:
+        {
+          projection: "linear",
+          dim_in: "${student_d_model}",
+          dim_out: "${d_model}",
+        },
+    }

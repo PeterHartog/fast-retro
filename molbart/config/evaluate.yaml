@@ -1,0 +1,44 @@
+# @package _global_
+
+defaults:
+  - callbacks: null
+  - plugins: null
+  - logger: tensorboard.yaml
+  - trainer: default.yaml
+
+  # override config either in this file or using experiment config
+  - _self_
+  - experiment: null # experiment configs allow for version control of specific hyperparameters
+
+train: false
+fine_tune: false
+distill: false
+test: false
+score: false
+predict: false
+
+# Trainer
+seed: 37
+batch_size: 64
+n_buckets: null
+
+# Data
+data_path: null
+dataset_type: synthesis
+vocabulary_path: vocab/bart_vocab_downstream.txt
+task: backward_prediction # [forward_prediction, backward_prediction]
+augment_prob: 0.0
+
+# Model
+model_path: null
+model_type: bart # [bart, unified]
+max_seq_len: 512
+n_beams: 10
+train_tokens: null
+
+logger:
+  save_dir: tb_logs
+  name: "eval_${model_type}_${dataset_type}"
+
+trainer:
+  limit_test_batches: 1.0

@@ -1,0 +1,19 @@
+filter:
+  standard: ./uspto_filter_model.onnx
+expansion:
+  standard:
+    - ./uspto_model.onnx
+    - ./uspto_templates.csv.gz
+  chemformer:
+    type: expansion_strategies.ChemformerBasedExpansionStrategy
+    url: localhost:PORT_NAME/chemformer-api/predict
+  multi_expansion_strategy:
+    type: aizynthfinder.context.policy.MultiExpansionStrategy
+    expansion_strategies: [standard, chemformer]
+    additive_expansion: True
+stock:
+  emolecules: ./emols-stock-2023-01-01.csv
+search:
+  time_limit: 500
+  algorithm_config:
+    immediate_instantiation: [chemformer]

@@ -1,0 +1,25 @@
+output_directory: ${output_directory}
+task: ${task}
+model_type: bart
+
+acc_batches: null
+
+d_model: 128
+n_layers: 6
+n_heads: 8
+d_feedforward: 2048
+schedule: cycle
+
+"n_epochs": getattr(args, "n_epochs", None),
+"augmentation_strategy": getattr(args, "augmentation_strategy", None),
+"augment_prob": getattr(args, "augmenation_probability", 0.0),
+"warm_up_steps": getattr(args, "warm_up_steps", None),
+"deepspeed_config_path": getattr(args, "deepspeed_config_path", None),
+"learning_rate": getattr(args, "learning_rate", None),
+"weight_decay": getattr(args, "weight_decay", None),
+"clip_grad": getattr(args, "clip_grad", None),
+
+"limit_val_batches": getattr(args, "limit_val_batches", None),
+"check_val_every_n_epoch": getattr(args, "check_val_every_n_epoch", None),
+# "checkpoint_every_n_step": getattr(args, "checkpoint_every_n_step", None),
+"n_nodes": getattr(args, "n_nodes", DEFAULT_NUM_NODES),

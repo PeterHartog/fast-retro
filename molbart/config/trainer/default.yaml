@@ -1,0 +1,15 @@
+_target_: pytorch_lightning.Trainer
+
+accelerator: auto
+devices: ${n_gpus}
+strategy: auto
+num_nodes: ${n_nodes}
+min_epochs: ${n_epochs}
+max_epochs: ${n_epochs}
+accumulate_grad_batches: ${acc_batches}
+gradient_clip_val: ${clip_grad}
+limit_val_batches: ${limit_val_batches}
+check_val_every_n_epoch: ${check_val_every_n_epoch}
+precision: 16-mixed
+profiler: null
+enable_progress_bar: true

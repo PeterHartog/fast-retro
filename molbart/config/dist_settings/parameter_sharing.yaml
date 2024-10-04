@@ -1,0 +1,101 @@
+temperature: 1
+temperature_scheduler: null
+hard_label_weight: 0.0
+hard_loss_type: ce
+hard_label_weight_scheduler: null
+kd_loss_weight: 1.0
+kd_loss_type: ce
+kd_loss_scheduler: null
+probability_shift: False
+intermediate_matches:
+  - {
+      layer_T: "emb",
+      layer_S: "emb",
+      feature: "hidden",
+      loss: "hidden_mse",
+      weight: 1.0,
+      projection:
+        {
+          projection: "linear",
+          dim_in: "${student_d_model}",
+          dim_out: "${d_model}",
+        },
+    }
+  - {
+      layer_T: "encoder.layers.0",
+      layer_S: "encoder.layers.0",
+      feature: "hidden",
+      loss: "hidden_mse",
+      weight: 1.0,
+      projection:
+        {
+          projection: "linear",
+          dim_in: "${student_d_model}",
+          dim_out: "${d_model}",
+        },
+    }
+  - {
+      layer_T: "encoder.layers.1",
+      layer_S: "encoder.layers.0",
+      feature: "hidden",
+      loss: "hidden_mse",
+      weight: 1.0,
+      projection:
+        {
+          projection: "linear",
+          dim_in: "${student_d_model}",
+          dim_out: "${d_model}",
+        },
+    }
+  - {
+      layer_T: "encoder.layers.2",
+      layer_S: "encoder.layers.0",
+      feature: "hidden",
+      loss: "hidden_mse",
+      weight: 1.0,
+      projection:
+        {
+          projection: "linear",
+          dim_in: "${student_d_model}",
+          dim_out: "${d_model}",
+        },
+    }
+  - {
+      layer_T: "encoder.layers.3",
+      layer_S: "encoder.layers.0",
+      feature: "hidden",
+      loss: "hidden_mse",
+      weight: 1.0,
+      projection:
+        {
+          projection: "linear",
+          dim_in: "${student_d_model}",
+          dim_out: "${d_model}",
+        },
+    }
+  - {
+      layer_T: "encoder.layers.4",
+      layer_S: "encoder.layers.0",
+      feature: "hidden",
+      loss: "hidden_mse",
+      weight: 1.0,
+      projection:
+        {
+          projection: "linear",
+          dim_in: "${student_d_model}",
+          dim_out: "${d_model}",
+        },
+    }
+  - {
+      layer_T: "encoder.layers.5",
+      layer_S: "encoder.layers.0",
+      feature: "hidden",
+      loss: "hidden_mse",
+      weight: 1.0,
+      projection:
+        {
+          projection: "linear",
+          dim_in: "${student_d_model}",
+          dim_out: "${d_model}",
+        },
+    }
