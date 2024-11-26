@@ -160,3 +160,5 @@ service/run_*.sh
 molbart/config/experiment
 molbart/config/hparam_search
 molbart/modules/explainers
+
+ted_analysis
